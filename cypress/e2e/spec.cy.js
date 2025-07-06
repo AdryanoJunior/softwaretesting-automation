@@ -1,7 +1,7 @@
 describe('Magento Software Testing', () => {
 
   it('', () => {
-    cy.visit('https://magento.softwaretestingboard.com/#google_vignette')
+    cy.visit('/#google_vignette')
     cy.get('.authorization-link').eq(0).click()
     cy.get("[title='Email']").type('cristianoronaldo@gmail.com')
     cy.get("[title='Password']").type('test12345$')
