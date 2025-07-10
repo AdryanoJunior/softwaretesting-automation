@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker'
 
 describe('Magento Software Testing', () => {
 
-  it('System Main Flow', () => {
+  it('Main System Test Cases', () => {
+
     cy.visit('/#google_vignette')
     cy.get("[href='https://magento.softwaretestingboard.com/customer/account/create/']").eq(0).click()
     cy.get("[title='First Name']").type(faker.person.firstName('male'))
@@ -50,4 +50,38 @@ describe('Magento Software Testing', () => {
     cy.get('body').should('contain', 'Your order number is:')
     
   })
+  it('Adding and Removing Product from Cart', () => {
+
+    cy.login()
+    
+    cy.get("[href='https://magento.softwaretestingboard.com/women.html']").click()
+    cy.get("[href='https://magento.softwaretestingboard.com/women/tops-women/hoodies-and-sweatshirts-women.html']").eq(1).click()
+    cy.get("[alt='Circe Hooded Ice Fleece']").click()
+    cy.get("[aria-label='M']").click()
+    cy.get("[aria-label='Purple']").click()
+    cy.get("[title='Add to Cart']").click()
+    cy.get('body').should('contain', 'You added Circe Hooded Ice Fleece to your shopping cart.')
+    cy.get("[title='Juliana Short-Sleeve Tee']").click()
+    cy.get("[aria-label='XL']").click()
+    cy.get("[aria-label='Yellow']").click()
+    cy.get("[title='Add to Cart']").click()
+    cy.get('body').should('contain', 'You added Juliana Short-Sleeve Tee to your shopping cart.')
+    cy.get(".showcart").click()
+    cy.get('body').should('contain', '$110.00')
+    cy.get("[title='Remove item']").eq(0).click()
+    cy.get(".action-accept").click()
+    cy.get('body').should('contain', '$68.00')
+    cy.get("[title='Remove item']").eq(1).click()
+    cy.get('body').should('contain', 'Are you sure you would like to remove this item from the shopping cart?')
+    cy.get('.action-primary > span').click()
+    cy.get('body').should('contain', 'ou have no items in your shopping cart.')
+  });
+  it.only('Search for Product Using the Search Bar', () => {
+    cy.login()
+
+    cy.get("[placeholder='Search entire store here...']").type('Impulse Duffle')
+    cy.get("[title='Search']").click()
+    cy.get('body').should('contain', 'Search results for:')
+    
+  });
 })
