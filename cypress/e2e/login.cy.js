@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 
 beforeEach(() => {
   cy.visit('/customer/account/login')
