@@ -6,9 +6,7 @@ beforeEach(() => {
 describe('Magento Software Testing', () => {
 
   it('Login - Success', () => {
-    cy.get("[title='Email']").type('cristianoronaldo@gmail.com')
-    cy.get("[title='Password']").type('test12345$')
-    cy.get("[name='send']").eq(0).click()
+    cy.login()
     cy.get('body').should('contain', 'Welcome, Test Cases!')
   })
 
