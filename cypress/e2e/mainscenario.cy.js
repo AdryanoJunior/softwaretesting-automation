@@ -41,11 +41,11 @@ describe('Magento Software Testing', () => {
 
     feminineProducts: "[href='https://magento.softwaretestingboard.com/women.html']" ,
     sweatshirtCatalog: "[href='https://magento.softwaretestingboard.com/women/tops-women/hoodies-and-sweatshirts-women.html']",
-    selectSweatshirt: "[alt='Circe Hooded Ice Fleece']",
+    selectSweatshirt: "[src='https://magento.softwaretestingboard.com/pub/media/catalog/product/cache/7c4c1ed835fbbf2269f24539582c6d44/w/h/wh12-gray_main_1.jpg']",
     selectSweatshirtSize: "[aria-label='M']",
     selectSweatshirtColor: "[aria-label='Purple']",
     addSweatshirtToCart: "[title='Add to Cart']",
-    selectRelatedProduct: "[title='Juliana Short-Sleeve Tee']",
+    selectRelatedProduct: "[alt='Juliana Short-Sleeve Tee']",
     changeSize: "[aria-label='XL']",
     changeColor: "[aria-label='Yellow']",
     addToCartProductTwo: "[title='Add to Cart']",
@@ -56,7 +56,13 @@ describe('Magento Software Testing', () => {
 
     searchBar: "[placeholder='Search entire store here...']",
     searchForProduct: "[title='Search']",
-
+    selectBag: "[alt='Impulse Duffle']",
+    addReviewButton: ".add",
+    selectFiveStars: "[for='Rating_5']",
+    nicknameField: "[name='nickname']",
+    summaryField: "#summary_field",
+    reviewField: "#review_field",
+    submitReviewButton: ".submit" 
  
   }
 
@@ -136,12 +142,20 @@ describe('Magento Software Testing', () => {
     cy.get('body').should('contain', 'You have no items in your shopping cart.')
   });
 
-  it.only('Search for Product Using the Search Bar', () => {
+  it('Search for the product using the search bar and leave a review', () => {
     cy.login()
 
     cy.get(selectorsList.searchBar).type('Impulse Duffle')
     cy.get(selectorsList.searchForProduct).click()
     cy.get('body').should('contain', 'Search results for:')
-    
+    cy.get(selectorsList.selectBag).should('be.visible').click({ multiple: true })
+    cy.get(selectorsList.addReviewButton).click()
+    cy.get('body').should('contain', 'Customer Reviews')
+    cy.get(selectorsList.selectFiveStars).click({force: true})
+    cy.get(selectorsList.nicknameField).clear().type('Test Cases')
+    cy.get(selectorsList.summaryField).type('My opinion after buying the bag')
+    cy.get(selectorsList.reviewField).type('I really liked it, a very pretty bag that catches your eye, has a lot of space and has a very comfortable handle and is made of very good material.')
+    cy.get(selectorsList.submitReviewButton).click()
+    cy.get('body').should('contain', 'You submitted your review for moderation.')
   });
 })
