@@ -2,43 +2,17 @@ import { faker } from '@faker-js/faker';
 import RegisterPage from '../pages/registerPage';
 import CatalogPage from '../pages/catalogPage';
 import CheckoutPage from '../pages/checkoutPage';
+import ReviewPage from '../pages/reviewPage';
 
 const registerPage = new RegisterPage()
 const catalogPage = new CatalogPage()
 const checkoutPage = new CheckoutPage()
+const reviewPage = new ReviewPage()
 
 describe('Magento Software Testing', () => {
 
-  const selectorsList = {
-  
-    feminineProducts: "[href='https://magento.softwaretestingboard.com/women.html']" ,
-    sweatshirtCatalog: "[href='https://magento.softwaretestingboard.com/women/tops-women/hoodies-and-sweatshirts-women.html']",
-    selectSweatshirt: "[src='https://magento.softwaretestingboard.com/pub/media/catalog/product/cache/7c4c1ed835fbbf2269f24539582c6d44/w/h/wh12-gray_main_1.jpg']",
-    selectSweatshirtSize: "[aria-label='M']",
-    selectSweatshirtColor: "[aria-label='Purple']",
-    addSweatshirtToCart: "[title='Add to Cart']",
-    selectRelatedProduct: "[alt='Juliana Short-Sleeve Tee']",
-    changeSize: "[aria-label='XL']",
-    changeColor: "[aria-label='Yellow']",
-    addToCartProductTwo: "[title='Add to Cart']",
-    removeProductFromCart: "[title='Remove item']",
-    acceptRemoval: ".action-accept",
-    removeProductTwo: "[title='Remove item']",
-    confirmRemoval: '.action-primary > span',
+  it('Main System Test Cases', () => {
 
-    searchBar: "[placeholder='Search entire store here...']",
-    searchForProduct: "[title='Search']",
-    selectBag: "[alt='Impulse Duffle']",
-    addReviewButton: ".add",
-    selectFiveStars: "[for='Rating_5']",
-    nicknameField: "[name='nickname']",
-    summaryField: "#summary_field",
-    reviewField: "#review_field",
-    submitReviewButton: ".submit" 
- 
-  }
-
-  it.only('Main System Test Cases', () => {
    registerPage.accessRegisterPage()
 
    registerPage.userRegistration()
@@ -48,12 +22,14 @@ describe('Magento Software Testing', () => {
 
    catalogPage.seeProductCatalog()
 
-   catalogPage.selectProductAndVariations()
+   catalogPage.selectJacketAndVariations()
+
    cy.get('body').should('contain', 'You added Lando Gym Jacket to your shopping cart.')
 
    catalogPage.continueShopping()
 
    catalogPage.selectClock()
+   catalogPage.addWatchesToCart()
    cy.get('body').should('contain', 'You added Luma Analog Watch to your shopping cart.')
 
    checkoutPage.accessCart()
@@ -70,43 +46,40 @@ describe('Magento Software Testing', () => {
 
     cy.login()
     
-    cy.get(selectorsList.feminineProducts).click()
-    cy.get(selectorsList.sweatshirtCatalog).eq(1).click()
-    cy.get(selectorsList.selectSweatshirt).click()
-    cy.get(selectorsList.selectSweatshirtSize).click()
-    cy.get(selectorsList.selectSweatshirtColor).click()
-    cy.get(selectorsList.addSweatshirtToCart).click()
+    catalogPage.accessSweatshirtCatalog()
+    catalogPage.selectSweatshirtAndVariations()
+
+    catalogPage.addSweatshirtToCartButton()
     cy.get('body').should('contain', 'You added Circe Hooded Ice Fleece to your shopping cart.')
-    cy.get(selectorsList.selectRelatedProduct).click()
-    cy.get(selectorsList.changeSize).click()
-    cy.get(selectorsList.changeColor).click()
-    cy.get(selectorsList.addToCartProductTwo).click()
+
+    catalogPage.selectRelatedProduct()
+    catalogPage.addRelatedProductToCart()
     cy.get('body').should('contain', 'You added Juliana Short-Sleeve Tee to your shopping cart.')
-    cy.get(selectorsList.showCart).click()
+    
+    checkoutPage.showCart()
     cy.get('body').should('contain', '$110.00')
-    cy.get(selectorsList.removeProductFromCart).eq(0).click()
-    cy.get(selectorsList.acceptRemoval).click()
+
+    checkoutPage.removeProductOneFromCart()
     cy.get('body').should('contain', '$68.00')
-    cy.get(selectorsList.removeProductTwo).eq(1).click()
-    cy.get('body').should('contain', 'Are you sure you would like to remove this item from the shopping cart?')
-    cy.get(selectorsList.confirmRemoval).click()
+
+    checkoutPage.removeProductTwoFromCart()
+    
     cy.get('body').should('contain', 'You have no items in your shopping cart.')
+
   });
 
   it('Search for the product using the search bar and leave a review', () => {
+
     cy.login()
 
-    cy.get(selectorsList.searchBar).type('Impulse Duffle')
-    cy.get(selectorsList.searchForProduct).click()
+    reviewPage.searchTheProduct()
     cy.get('body').should('contain', 'Search results for:')
-    cy.get(selectorsList.selectBag).should('be.visible').click({ multiple: true })
-    cy.get(selectorsList.addReviewButton).click()
+
+    reviewPage.selectBagToBeReviewed()
     cy.get('body').should('contain', 'Customer Reviews')
-    cy.get(selectorsList.selectFiveStars).click({force: true})
-    cy.get(selectorsList.nicknameField).clear().type('Test Cases')
-    cy.get(selectorsList.summaryField).type('My opinion after buying the bag')
-    cy.get(selectorsList.reviewField).type('I really liked it, a very pretty bag that catches your eye, has a lot of space and has a very comfortable handle and is made of very good material.')
-    cy.get(selectorsList.submitReviewButton).click()
+    
+    reviewPage.insertReviewInformation()
     cy.get('body').should('contain', 'You submitted your review for moderation.')
+
   });
 })

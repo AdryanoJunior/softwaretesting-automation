@@ -17,6 +17,10 @@ class CheckoutPage {
                shippingMethod: "[checked='true']",
                continueOrder: "[data-role='opc-continue']",
                placeOrder: "[title='Place Order']",
+               removeProductFromCart: "[title='Remove item']",
+               acceptRemoval: ".action-accept",
+               removeProductTwo: "[title='Remove item']",
+               confirmRemoval: '.action-primary > span',
 
         }
         return selectors
@@ -24,6 +28,9 @@ class CheckoutPage {
     accessCart() {
         cy.get(this.selectorsList().showCart).click()
         cy.get(this.selectorsList().proceedToCheckoutButton).click()
+    }
+    showCart() {
+        cy.get(this.selectorsList().showCart).click()
     }
     enterPersonalData() {
         cy.get(this.selectorsList().firstNameCheckout).clear().type('Test')
@@ -41,6 +48,14 @@ class CheckoutPage {
     placeOrder() {
         cy.get(this.selectorsList().continueOrder).click()
         cy.get(this.selectorsList().placeOrder).click()
+    }
+    removeProductOneFromCart() {
+        cy.get(this.selectorsList().removeProductFromCart).eq(0).click()
+        cy.get(this.selectorsList().acceptRemoval).click()
+    }
+    removeProductTwoFromCart() {
+        cy.get(this.selectorsList().removeProductTwo).eq(1).click()
+        cy.get(this.selectorsList().confirmRemoval).click()
     }
 }
 

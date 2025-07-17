@@ -16,6 +16,16 @@ class CatalogPage {
             selectWatch: "[alt='Luma Analog Watch']",
             selectWatchQuantity: "[title='Qty']",
             addWatchesToCart: "[title='Add to Cart']",
+            feminineProducts: "[href='https://magento.softwaretestingboard.com/women.html']" ,
+            sweatshirtCatalog: "[href='https://magento.softwaretestingboard.com/women/tops-women/hoodies-and-sweatshirts-women.html']",
+            selectSweatshirt: "[src='https://magento.softwaretestingboard.com/pub/media/catalog/product/cache/7c4c1ed835fbbf2269f24539582c6d44/w/h/wh12-gray_main_1.jpg']",
+            selectSweatshirtSize: "[aria-label='M']",
+            selectSweatshirtColor: "[aria-label='Purple']",
+            addSweatshirtToCart: "[title='Add to Cart']",
+            selectRelatedProduct: "[alt='Juliana Short-Sleeve Tee']",
+            changeSize: "[aria-label='XL']",
+            changeColor: "[aria-label='Yellow']",
+            addToCartProductTwo: "[title='Add to Cart']",
         }
         return selectors
     }
@@ -25,7 +35,7 @@ class CatalogPage {
         cy.get(this.selectorsList().jacketCatalog).eq(1).click()
     }
 
-    selectProductAndVariations() {
+    selectJacketAndVariations() {
         cy.get(this.selectorsList().selectJacket).click()
         cy.get(this.selectorsList().selectSize).click()
         cy.get(this.selectorsList().selectColor).click()
@@ -42,7 +52,32 @@ class CatalogPage {
     selectClock() {
         cy.get(this.selectorsList().selectWatch).click({ multiple: true})
         cy.get(this.selectorsList().selectWatchQuantity).clear().type('2')
+        
+    }
+    addWatchesToCart() {
         cy.get(this.selectorsList().addWatchesToCart).click()
+    }
+    accessSweatshirtCatalog() {
+        cy.get(this.selectorsList().feminineProducts).click()
+        cy.get(this.selectorsList().sweatshirtCatalog).eq(1).click()
+    }
+    selectSweatshirtAndVariations() {
+        cy.get(this.selectorsList().selectSweatshirt).click()
+        cy.get(this.selectorsList().selectSweatshirtSize).click()
+        cy.get(this.selectorsList().selectSweatshirtColor).click()
+       
+    }
+    addSweatshirtToCartButton() {
+        cy.get(this.selectorsList().addSweatshirtToCart).click()
+    }
+    selectRelatedProduct() {
+        cy.get(this.selectorsList().selectRelatedProduct).click()
+        cy.get(this.selectorsList().changeSize).click()
+        cy.get(this.selectorsList().changeColor).click()
+        
+    }
+    addRelatedProductToCart() {
+        cy.get(this.selectorsList().addToCartProductTwo).click()
     }
 }
 
