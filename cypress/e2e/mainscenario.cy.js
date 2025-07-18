@@ -1,5 +1,4 @@
-import { faker } from '@faker-js/faker';
-import RegisterPage from '../pages/registerPage';
+import RegisterPage from '../pages/registerPage'
 import CatalogPage from '../pages/catalogPage';
 import CheckoutPage from '../pages/checkoutPage';
 import ReviewPage from '../pages/reviewPage';
