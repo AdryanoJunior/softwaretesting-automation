@@ -8,7 +8,7 @@ const catalogPage = new CatalogPage()
 const checkoutPage = new CheckoutPage()
 const reviewPage = new ReviewPage()
 
-describe('Magento Software Testing', () => {
+describe('Magento Software Testing - Main flows of a real user in the system', () => {
 
   it('Main System Test Cases', () => {
 
@@ -41,6 +41,7 @@ describe('Magento Software Testing', () => {
    cy.get('body').should('contain', 'Your order number is:')
     
   })
+
   it('Adding and Removing Product from Cart', () => {
 
     cy.login()
